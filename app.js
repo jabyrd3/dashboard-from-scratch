@@ -76,23 +76,27 @@ const app = () => {
         canvas.clientHeight);
       let idx = 0;
       let emergency = document.getElementById('emergency');
-      Object.keys(json).forEach(key => {
-        json[key].map((item) => {
-          context.fillStyle = colorHex[item.TriageStatus.toLowerCase()];
-          let barWidth = canvas.clientWidth * (
-              (config.now - new Date(item['$116']).getTime()) / config.oldest);
-          context.fillRect(
-            canvas.clientWidth - barWidth,
-            barHeight * idx * 1.5 + (canvas.clientHeight / 50),
-            barWidth,
-            barHeight);
-          idx++;
-          if (item.TriageStatus === 'White' && !emergency){
-            emergency = document.createElement('div');
-            emergency.id = 'emergency';
-            document.body.appendChild(emergency);
-          }
-        });
+      Object.keys(json)
+        .forEach((key, fidx) => {
+          console.log(fidx);
+          json[key]
+            .map((item, midx) => {
+              console.log(midx);
+              context.fillStyle = colorHex[item.TriageStatus.toLowerCase()];
+              let barWidth = canvas.clientWidth * (
+                  (config.now - new Date(item['$116']).getTime()) / config.oldest);
+              context.fillRect(
+                canvas.clientWidth - barWidth,
+                barHeight * idx * 1.5 + (canvas.clientHeight / 50),
+                barWidth,
+                barHeight);
+              idx++;
+              if (item.TriageStatus === 'White' && !emergency){
+                emergency = document.createElement('div');
+                emergency.id = 'emergency';
+                document.body.appendChild(emergency);
+              }
+          });
       });
 
       // render graph
