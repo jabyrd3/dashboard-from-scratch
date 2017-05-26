@@ -6,6 +6,7 @@ const app = () => {
   const colorOptions = ['Red', 'Green', 'Blue', 'White'];
   const colorHex = {
     bg: '#1B1F24',
+    histoAxis: '#eff1f5',
     red: '#A00D00',
     blue: '#064987',
     green: '#007F26',
@@ -43,7 +44,7 @@ const app = () => {
     let [leftBound, topBound, rightBound, bottomBound, highest] =
       bzb;
     let vertUnit = (bottomBound - topBound) / (highest - lowest);
-    let horizUnit = (rightBound - leftBound) / length;
+    let horizUnit = (rightBound - leftBound) / length+1;
     let x = leftBound + horizUnit * idx;
     let y = topBound + ((highest - line[1]) * vertUnit);
     let [nx, ny] = next ?
@@ -63,8 +64,8 @@ const app = () => {
       let bezierBounds = [
         0,
         canvas.clientHeight * .6,
-        canvas.clientWidth * .75,
-        canvas.clientHeight,
+        canvas.clientWidth * .7,
+        canvas.clientHeight - 40,
         // get highest and lowest vals in csv for measuring
         ...csv
           .slice()
@@ -114,10 +115,12 @@ const app = () => {
       context.strokeStyle = colorHex.white;
       context.lineWidth = canvas.clientHeight / 700;
       context.stroke();
-      // context.moveTo(bezierBounds[0], bezierBounds[1]-100);
-      // context.beginPath();
-      // context.lineTo(bezierBounds[2], bezierBounds[3]-100);
-      // context.stroke();
+      context.beginPath();
+      context.moveTo(bezierBounds[0], bezierBounds[3]);
+      context.lineTo(bezierBounds[2], bezierBounds[3]);
+      context.strokeStyle = colorHex.histoAxis;
+      context.lineWidth = canvas.clientHeight / 1600;
+      context.stroke();
       // render count of json array
       let fontsize = parseInt(canvas.clientWidth / 5, 10);
       context.font =
