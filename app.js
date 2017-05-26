@@ -113,7 +113,8 @@ const app = () => {
               ...coords(bezierBounds, l, csv[idx+1], idx, csv.length));
       });
       context.strokeStyle = colorHex.white;
-      context.lineWidth = canvas.clientHeight / 700;
+      context.lineWidth = canvas.clientHeight / 200;
+      context.lineCap = "round";
       context.stroke();
       context.beginPath();
       context.moveTo(bezierBounds[0], bezierBounds[3]);

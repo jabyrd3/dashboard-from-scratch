@@ -15,18 +15,23 @@
 }
 
 @keyframes spinner {
+    from { 
+        opacity: 0;
+     }
+
     to {
-        transform: rotate(360deg);
+        opacity: 1;
     }
 }
 
 #emergency {
-    animation: spinner 1s forwards linear infinite;
+    animation: spinner 1s alternate linear infinite;
     height: 200vh;
     z-index: 1;
-    background: linear-gradient(left, rgba(255, 0, 0, 0.5) 0%, rgba(255, 158, 12, 0.55) 20%, rgba(209, 255, 25, 0.6) 40%, rgba(81, 255, 38, 0.65) 60%, rgba(91, 255, 50, 0.7) 80%, rgba(63, 255, 140, 0.75) 100%), linear-gradient(right, rgba(63, 255, 140, 0.75) 0%, rgba(76, 255, 255, 0.8) 20%, rgba(89, 155, 255, 0.85) 40%, rgba(132, 102, 255, 0.9) 60%, rgba(226, 114, 255, 0.95) 80%, rgba(249, 112, 194, 1) 100%) 0 100%;
-    background: -webkit-linear-gradient(left, rgba(255, 0, 0, 0.5) 0%, rgba(255, 158, 12, 0.55) 20%, rgba(209, 255, 25, 0.6) 40%, rgba(81, 255, 38, 0.65) 60%, rgba(91, 255, 50, 0.7) 80%, rgba(63, 255, 140, 0.75) 100%), -webkit-linear-gradient(right, rgba(63, 255, 140, 0.75) 0%, rgba(76, 255, 255, 0.8) 20%, rgba(89, 155, 255, 0.85) 40%, rgba(132, 102, 255, 0.9) 60%, rgba(226, 114, 255, 0.95) 80%, rgba(249, 112, 194, 1) 100%) 0 100%;
-    background-repeat: no-repeat;
+/*    background: radial-gradient(circle, red 0%, orange 10%, yellow 20%, green 30%, blue 40%, indigo 45%, violet 50%);
+    background: -webkit-radial-gradient(circle, red 0%, orange 10%, yellow 20%, green 30%, blue 40%, indigo 45%, violet 5   0%);
+*/    background-repeat: repeat;
+background-color: orange;
     position: fixed;
     width: 200vw;
     bottom: 50%;
