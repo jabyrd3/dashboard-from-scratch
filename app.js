@@ -81,14 +81,14 @@ const app = () => {
         canvas.clientWidth,
         canvas.clientHeight);
       let idx = 0;
-      let emergency = document.getElementById('emergency');
+      let UNTRIAGED = document.getElementById('UNTRIAGED');
       json.green && json.green
         .filter(v=>v.TriageStatus==='White').length === 0 &&
-        emergency &&
+        UNTRIAGED &&
         (()=>{
           document.body.className = '';
           return true;
-        })() && document.body.removeChild(emergency);
+        })() && document.body.removeChild(UNTRIAGED);
       let msUnit = canvas.clientWidth / config.oldest;
       Object.keys(json)
         .forEach(key => {
@@ -104,11 +104,11 @@ const app = () => {
                 barWidth,
                 barHeight);
               idx++;
-              if (item.TriageStatus === 'White' && !emergency){
-                emergency = document.createElement('div');
-                emergency.id = 'emergency';
-                document.body.appendChild(emergency);
-                document.body.className='emergency';
+              if (item.TriageStatus === 'White' && !UNTRIAGED){
+                UNTRIAGED = document.createElement('div');
+                UNTRIAGED.id = 'UNTRIAGED';
+                document.body.appendChild(UNTRIAGED);
+                document.body.className='UNTRIAGED';
               }
           });
       });

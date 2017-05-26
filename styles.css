@@ -33,11 +33,11 @@
         transform: translate3d(50vw, 0, 0);
     }
 }
-body.emergency{
+body.UNTRIAGED{
     /*transition: all 900ms linear;*/
     animation: pulse 1s alternate infinite;
 }
-#emergency {
+#UNTRIAGED {
     /*animation: spinner 1s alternate linear infinite;*/
     height: 200vh;
     z-index: 1;
