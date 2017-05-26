@@ -22,7 +22,8 @@ const app = () => {
     jsonInterval: 5000,
     // 13 digit js date shit, sorry its weird
     now: Date.now(),
-    oldest: 28800000
+    oldest: 28800000,
+    lineWidthDivisor: 200
   };
   const canvasDad = new CanvasDad();
   const timerDad = new TimerDad();
@@ -45,7 +46,7 @@ const app = () => {
       bzb;
     let vertUnit = (bottomBound - topBound) / (highest - lowest);
     let horizUnit = (rightBound - leftBound) / length+1;
-    let x = leftBound + horizUnit * idx;
+    let x = leftBound + horizUnit * idx + 10;
     let y = topBound + ((highest - line[1]) * vertUnit);
     let [nx, ny] = next ?
       [(x + leftBound + horizUnit * (idx + 1))/2,
@@ -59,8 +60,8 @@ const app = () => {
       let barTotal = Object
         .keys(json)
         .reduce((acc, key) => acc + json[key].length, 0);
-      let barHeight = (canvas.clientHeight / 3) / barTotal;
-      // xy xy int int: top-left, bottom-right, highestval, lowestVal
+      let barHeight = barTotal > 6 ? (canvas.clientHeight / 3) / barTotal : 30;
+      // xy xy int int: top-left, bottom-right, highstval, lowestVal
       let bezierBounds = [
         0,
         canvas.clientHeight * .6,
@@ -84,7 +85,10 @@ const app = () => {
       json.green && json.green
         .filter(v=>v.TriageStatus==='White').length === 0 &&
         emergency &&
-        (document.body.className='' && document.body.removeChild(emergency));
+        (()=>{
+          document.body.className = '';
+          return true;
+        })() && document.body.removeChild(emergency);
       Object.keys(json)
         .forEach(key => {
           json[key]
@@ -92,6 +96,7 @@ const app = () => {
               context.fillStyle = colorHex[key];
               let barWidth = canvas.clientWidth * (
                   (config.now - new Date(item['$116']).getTime()) / config.oldest);
+              barWidth < canvas.clientWidth / 50 && (()=>barWidth = canvas.clientWidth / 50)();
               context.fillRect(
                 canvas.clientWidth - barWidth,
                 barHeight * idx * 1.5 + (canvas.clientHeight / 50),
@@ -114,14 +119,14 @@ const app = () => {
               ...coords(bezierBounds, l, csv[idx+1], idx, csv.length));
       });
       context.strokeStyle = colorHex.white;
-      context.lineWidth = canvas.clientHeight / 200;
-      context.lineCap = "round";
+      context.lineWidth = canvas.clientHeight / config.lineWidthDivisor;
+      context.lineCap = 'round';
       context.stroke();
       context.beginPath();
       context.moveTo(bezierBounds[0], bezierBounds[3]);
       context.lineTo(bezierBounds[2], bezierBounds[3]);
       context.strokeStyle = colorHex.histoAxis;
-      context.lineWidth = canvas.clientHeight / 1600;
+      context.lineWidth = canvas.clientHeight / (config.lineWidthDivisor * 8);
       context.stroke();
       // render count of json array
       let fontsize = parseInt(canvas.clientWidth / 5, 10);
