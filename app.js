@@ -20,7 +20,7 @@ const app = () => {
     csvInterval: 1200000,
     jsonInterval: 5000,
     // 13 digit js date shit, sorry its weird
-    now: new Date('2017-05-22T16:43:02Z').getTime(),
+    now: Date.now(),
     oldest: 28800000
   };
   const canvasDad = new CanvasDad();
@@ -39,7 +39,8 @@ const app = () => {
     // next: [timestamp, val]
     // idx: int
     // length: int, overall points count
-    let [leftBound, topBound, rightBound, bottomBound, highest, lowest] =
+    let lowest = 0;
+    let [leftBound, topBound, rightBound, bottomBound, highest] =
       bzb;
     let vertUnit = (bottomBound - topBound) / (highest - lowest);
     let horizUnit = (rightBound - leftBound) / length;
@@ -61,7 +62,7 @@ const app = () => {
       // xy xy int int: top-left, bottom-right, highestval, lowestVal
       let bezierBounds = [
         0,
-        canvas.clientHeight * .5,
+        canvas.clientHeight * .6,
         canvas.clientWidth * .75,
         canvas.clientHeight,
         // get highest and lowest vals in csv for measuring
@@ -113,7 +114,10 @@ const app = () => {
       context.strokeStyle = colorHex.white;
       context.lineWidth = canvas.clientHeight / 700;
       context.stroke();
-
+      // context.moveTo(bezierBounds[0], bezierBounds[1]-100);
+      // context.beginPath();
+      // context.lineTo(bezierBounds[2], bezierBounds[3]-100);
+      // context.stroke();
       // render count of json array
       let fontsize = parseInt(canvas.clientWidth / 5, 10);
       context.font =
@@ -175,7 +179,7 @@ const app = () => {
             .parse(val.response)
             .filter(item => colorOptions.indexOf(item.TriageStatus > -1))
             .sort((a, b) => new Date(a['$116'])
-              .getTime() > new Date(b['$116']).getTime())
+              .getTime() - new Date(b['$116']).getTime())
             .reduce(
               (acc, item) => {
                 item.TriageStatus !== 'White' ?
