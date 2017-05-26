@@ -105,9 +105,8 @@ const app = () => {
       });
       // render graph
       context.beginPath();
-      context.moveTo(bezierBounds[0], bezierBounds[1]);
-      csv.map((l, idx) => {
-        context
+      csv.forEach((l, idx) => {
+        idx === 0 ? context.moveTo(...coords(bezierBounds, l, csv[idx+1], idx, csv.length)) : context
           .quadraticCurveTo(
               ...coords(bezierBounds, l, csv[idx+1], idx, csv.length));
       });
