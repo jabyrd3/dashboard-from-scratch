@@ -1,10 +1,10 @@
 #app {
     position: fixed;
     background-color: #1B1F24;
-    left: 1vh;
-    right: 1vh;
-    top: 1vh;
-    bottom: 1vh;
+    left: 4vh;
+    right: 4vh;
+    top: 4vh;
+    bottom: 4vh;
     z-index: 2;
 }
 
