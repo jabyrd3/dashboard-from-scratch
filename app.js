@@ -60,7 +60,8 @@ const app = () => {
       let barTotal = Object
         .keys(json)
         .reduce((acc, key) => acc + json[key].length, 0);
-      let barHeight = barTotal > 6 ? (canvas.clientHeight / 3) / barTotal : 30;
+      let barHeight = (canvas.clientHeight / 3) / (barTotal*1.5);
+      barHeight = barHeight > canvas.clientHeight / 20 ? canvas.clientHeight / 20 : barHeight;
       // xy xy int int: top-left, bottom-right, highstval, lowestVal
       let bezierBounds = [
         0,
