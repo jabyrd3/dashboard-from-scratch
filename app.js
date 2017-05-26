@@ -1,30 +1,9 @@
 'use strict';
 
-/* globals CanvasDad, networkDad, TimerDad */
+/* globals CanvasDad, networkDad, TimerDad, config */
 
 const app = () => {
   const colorOptions = ['Red', 'Green', 'Blue', 'White'];
-  const colorHex = {
-    bg: '#1B1F24',
-    histoAxis: '#eff1f5',
-    red: '#A00D00',
-    blue: '#064987',
-    green: '#007F26',
-    white: '#eff1f5'
-  };
-  const config = {
-    // url
-    root: 'http://localhost:9091',
-    csv: '/history.csv',
-    json: '/data.json',
-    // ms
-    csvInterval: 1200000,
-    jsonInterval: 5000,
-    // 13 digit js date shit, sorry its weird
-    now: Date.now(),
-    oldest: 28800000,
-    lineWidthDivisor: 200
-  };
   const canvasDad = new CanvasDad();
   const timerDad = new TimerDad();
   // update this to not be static when pushed to prod
@@ -75,7 +54,7 @@ const app = () => {
           .filter((v, idx) => idx === 0 || idx+1 === csv.length)
           .map(v => parseInt(v[1], 10))
       ];
-      context.fillStyle = colorHex.bg;
+      context.fillStyle = config.colorHex.bg;
       context.fillRect(
         0,
         0,
@@ -95,7 +74,7 @@ const app = () => {
         .forEach(key => {
           json[key]
             .map(item => {
-              context.fillStyle = colorHex[key];
+              context.fillStyle = config.colorHex[key];
               let diff = config.now - new Date(item['$116']).getTime();
               let barWidth = diff > config.oldest ? msUnit * config.oldest : msUnit * diff;
               barWidth < canvas.clientWidth / 50 && (() => barWidth = canvas.clientWidth / 50)();
@@ -120,21 +99,21 @@ const app = () => {
           .quadraticCurveTo(
               ...coords(bezierBounds, l, csv[idx+1], idx, csv.length));
       });
-      context.strokeStyle = colorHex.white;
+      context.strokeStyle = config.colorHex.white;
       context.lineWidth = canvas.clientHeight / config.lineWidthDivisor;
       context.lineCap = 'round';
       context.stroke();
       context.beginPath();
       context.moveTo(bezierBounds[0], bezierBounds[3]);
       context.lineTo(bezierBounds[2], bezierBounds[3]);
-      context.strokeStyle = colorHex.histoAxis;
+      context.strokeStyle = config.colorHex.histoAxis;
       context.lineWidth = canvas.clientHeight / (config.lineWidthDivisor * 8);
       context.stroke();
       // render count of json array
       let fontsize = parseInt(canvas.clientWidth / 5, 10);
       context.font =
         `${fontsize}px Helvetica Neue, Helvetica, Arial, sans-serif`;
-      context.fillStyle = colorHex.white;
+      context.fillStyle = config.colorHex.white;
       context.fillText(barTotal.toString(),
         canvas.clientWidth * .75,
         canvas.clientHeight * .85);
