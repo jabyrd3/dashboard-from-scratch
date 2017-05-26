@@ -33,17 +33,21 @@ const app = () => {
     // offset by the amount needed for the layout (determined
     // by the bezierBounds array set in the canvasdad render
     // functions
-    //
+    //       0  1  2  3  4  5
     // bzb: [x, y, x, y, h, l]
     // line: [timestamp, val]
     // next: [timestamp, val]
     // idx: int
     // length: int, overall points count
-    let x = bzb[0] + (((bzb[2]-bzb[0]) / length) * idx);
-    let y = bzb[1] + ((bzb[3] - bzb[1]) / (bzb[4] - bzb[5]) * line[1]);
+    let [leftBound, topBound, rightBound, bottomBound, highest, lowest] =
+      bzb;
+    let vertUnit = (bottomBound - topBound) / (highest - lowest);
+    let horizUnit = (rightBound - leftBound) / length;
+    let x = leftBound + horizUnit * idx;
+    let y = topBound + ((highest - line[1]) * vertUnit);
     let [nx, ny] = next ?
-      [(x + bzb[0] + (((bzb[2]-bzb[0]) / length) * (idx + 1)))/2,
-       (y + bzb[1] + ((bzb[3] - bzb[1]) / (bzb[4] - bzb[5]) * next[1]))/2] :
+      [(x + leftBound + horizUnit * (idx + 1))/2,
+       (y + (topBound + ((highest - next[1]) * vertUnit)))/2] :
       [x,y];
     return [x, y, nx, ny];
   };
@@ -59,12 +63,11 @@ const app = () => {
         0,
         canvas.clientHeight * .5,
         canvas.clientWidth * .75,
-        canvas.clientHeight - 150,
+        canvas.clientHeight,
         // get highest and lowest vals in csv for measuring
         ...csv
           .slice()
-          .sort((a,b) => a[1] > b[1])
-          .reverse()
+          .sort((a,b) => b[1] - a[1])
           .filter((v, idx) => idx === 0 || idx+1 === csv.length)
           .map(v => parseInt(v[1], 10))
       ];
@@ -151,7 +154,7 @@ const app = () => {
             // config now is 13 digit timestamp from config object,
             // line[0] is 13 digit timestamp from previous map
             // config.oldest is magic number for 8 hours from config
-            .filter(line => config.now - line[0] > config.oldest);
+            .filter(line => config.now - line[0] < config.oldest);
           triggerWarning(false);
           canvasDad.update(canvasId);
         })
