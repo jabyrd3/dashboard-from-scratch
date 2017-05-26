@@ -113,10 +113,10 @@ const app = () => {
       // render 'oldest' as text below baseline
       let fontSize = parseInt(canvas.clientHeight / 50, 10);
       context.font =
-        `${fontSize}px Helvetica Neue, Helvetica, Arial, sans-serif`;
+        `100 ${fontSize}px Helvetica Neue, Helvetica, Arial, sans-serif`;
       context.fillStyle = config.colorHex.white;
-      context.fillText(`${config.oldest/1000/60/60} hours ago`,
-        (bezierBounds[2] - bezierBounds[0]) / 2 - canvas.clientWidth/30,
+      context.fillText(`Last ${config.oldest/1000/60/60} hours`,
+        (bezierBounds[2] - bezierBounds[0]) / 2 - canvas.clientWidth/25,
         bezierBounds[3] + canvas.clientHeight / 40);
 
       // render count of json array
