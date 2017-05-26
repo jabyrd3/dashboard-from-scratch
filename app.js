@@ -18,7 +18,7 @@ const app = () => {
     json: '/data.json',
     // ms
     csvInterval: 1200000,
-    jsonInterval: 20000,
+    jsonInterval: 5000,
     // 13 digit js date shit, sorry its weird
     now: new Date('2017-05-22T16:43:02Z').getTime(),
     oldest: 28800000
@@ -76,7 +76,10 @@ const app = () => {
         canvas.clientHeight);
       let idx = 0;
       let emergency = document.getElementById('emergency');
-      emergency && document.body.removeChild(emergency);
+      json.green && json.green
+        .filter(v=>v.TriageStatus==='White').length === 0 &&
+        emergency &&
+        document.body.removeChild(emergency);
       Object.keys(json)
         .forEach(key => {
           json[key]
