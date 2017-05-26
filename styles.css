@@ -14,30 +14,46 @@
     padding: 0;
 }
 
-@keyframes spinner {
-    from { 
+@keyframes pulse {
+    from {
         opacity: 0;
-     }
-
+    }
     to {
         opacity: 1;
     }
 }
 
+@keyframes rainbowBorder {
+    0% {
+        opacity: 0;
+        transform: translate3d(-50vw, 0, 0);
+    }
+    100% {
+        opacity: 1;
+        transform: translate3d(50vw, 0, 0);
+    }
+}
+body.emergency{
+    /*transition: all 900ms linear;*/
+    animation: pulse 1s alternate infinite;
+}
 #emergency {
-    animation: spinner 1s alternate linear infinite;
+    /*animation: spinner 1s alternate linear infinite;*/
     height: 200vh;
     z-index: 1;
-/*    background: radial-gradient(circle, red 0%, orange 10%, yellow 20%, green 30%, blue 40%, indigo 45%, violet 50%);
-    background: -webkit-radial-gradient(circle, red 0%, orange 10%, yellow 20%, green 30%, blue 40%, indigo 45%, violet 5   0%);
-*/    background-repeat: repeat;
-background-color: orange;
+    background: initial;
+/*    -webkit-transition: all 900ms linear;
+    transition: all 900ms linear;
+*/    background: -webkit-linear-gradient(305deg, #ff0000, #ff9000, #feff00, #1dff00, #00ffe6, #0042ff, #e200ff, #ff00b6);
+    background: linear-gradient(145deg, #ff0000, #ff9000, #feff00, #1dff00, #00ffe6, #0042ff, #e200ff, #ff00b6);
+    -webkit-animation: rainbowBorder 1s alternate infinite;
+    animation: rainbowBorder 1s alternate infinite;
     position: fixed;
     width: 200vw;
-    bottom: 50%;
-    right: 50%;
-    top: -50%;
-    left: -50%;
+    bottom: -50vh;
+    right: -50vh;
+    top: -50vh;
+    left: -50vw;
 }
 
 #error {

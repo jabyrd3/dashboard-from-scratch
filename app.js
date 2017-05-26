@@ -84,7 +84,7 @@ const app = () => {
       json.green && json.green
         .filter(v=>v.TriageStatus==='White').length === 0 &&
         emergency &&
-        document.body.removeChild(emergency);
+        (document.body.className='' && document.body.removeChild(emergency));
       Object.keys(json)
         .forEach(key => {
           json[key]
@@ -102,6 +102,7 @@ const app = () => {
                 emergency = document.createElement('div');
                 emergency.id = 'emergency';
                 document.body.appendChild(emergency);
+                document.body.className='emergency';
               }
           });
       });
