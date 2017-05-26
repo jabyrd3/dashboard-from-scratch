@@ -89,14 +89,15 @@ const app = () => {
           document.body.className = '';
           return true;
         })() && document.body.removeChild(emergency);
+      let msUnit = canvas.clientWidth / config.oldest;
       Object.keys(json)
         .forEach(key => {
           json[key]
             .map(item => {
               context.fillStyle = colorHex[key];
-              let barWidth = canvas.clientWidth * (
-                  (config.now - new Date(item['$116']).getTime()) / config.oldest);
-              barWidth < canvas.clientWidth / 50 && (()=>barWidth = canvas.clientWidth / 50)();
+              let diff = config.now - new Date(item['$116']).getTime();
+              let barWidth = diff > config.oldest ? msUnit * config.oldest : msUnit * diff;
+              barWidth < canvas.clientWidth / 50 && (() => barWidth = canvas.clientWidth / 50)();
               context.fillRect(
                 canvas.clientWidth - barWidth,
                 barHeight * idx * 1.5 + (canvas.clientHeight / 50),
