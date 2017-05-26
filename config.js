@@ -4,11 +4,14 @@ const config = {
   csv: '/history.csv',
   json: '/data.json',
   // ms
-  csvInterval: 1200000,
-  jsonInterval: 5000,
+  // 20 minutes
+  csvInterval: 20 * 60 * 1000,
+  // 20 seconds
+  jsonInterval: 20 * 1000,
   // 13 digit js date shit, sorry its weird
   now: Date.now(),
-  oldest: 28800000,
+  // 8 hours
+  oldest: 8 * 60 * 60 * 1000,
   lineWidthDivisor: 200,
   colorHex: {
     bg: '#1B1F24',
