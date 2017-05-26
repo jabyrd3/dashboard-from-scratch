@@ -3,7 +3,7 @@
 /* globals CanvasDad, networkDad, TimerDad */
 
 const app = () => {
-  const colorOptions = ['Red', 'Green', 'Blue'];
+  const colorOptions = ['Red', 'Green', 'Blue', 'White'];
   const colorHex = {
     bg: '#1B1F24',
     red: '#A00D00',
@@ -19,6 +19,7 @@ const app = () => {
     // ms
     csvInterval: 1200000,
     jsonInterval: 20000,
+    // 13 digit js date shit, sorry its weird
     now: new Date('2017-05-22T16:43:02Z').getTime(),
     oldest: 28800000
   };
@@ -38,7 +39,6 @@ const app = () => {
     // next: [timestamp, val]
     // idx: int
     // length: int, overall points count
-
     let x = bzb[0] + (((bzb[2]-bzb[0]) / length) * idx);
     let y = bzb[1] + ((bzb[3] - bzb[1]) / (bzb[4] - bzb[5]) * line[1]);
     let [nx, ny] = next ?
@@ -52,7 +52,7 @@ const app = () => {
     .create(document.getElementById('app'), (canvas, context) => {
       let barTotal = Object
         .keys(json)
-        .reduce((acc, list) => acc + list.length, 0);
+        .reduce((acc, key) => acc + json[key].length, 0);
       let barHeight = (canvas.clientHeight / 3) / barTotal;
       // xy xy int int: top-left, bottom-right, highestval, lowestVal
       let bezierBounds = [
@@ -76,13 +76,12 @@ const app = () => {
         canvas.clientHeight);
       let idx = 0;
       let emergency = document.getElementById('emergency');
+      emergency && document.body.removeChild(emergency);
       Object.keys(json)
-        .forEach((key, fidx) => {
-          console.log(fidx);
+        .forEach(key => {
           json[key]
-            .map((item, midx) => {
-              console.log(midx);
-              context.fillStyle = colorHex[item.TriageStatus.toLowerCase()];
+            .map(item => {
+              context.fillStyle = colorHex[key];
               let barWidth = canvas.clientWidth * (
                   (config.now - new Date(item['$116']).getTime()) / config.oldest);
               context.fillRect(
@@ -98,7 +97,6 @@ const app = () => {
               }
           });
       });
-
       // render graph
       context.beginPath();
       context.moveTo(bezierBounds[0], bezierBounds[1]);
@@ -137,13 +135,19 @@ const app = () => {
     return timerDad.create(() => {
       networkDad(`${config.root}${config.csv}`)
         .then(val => {
+          // split on lines, returns array like [date, sumValue]
+          // also filters out items that are too old, not sure if thats right.
           csv = val.response
             .split('\n')
             .map(line => line.split(','))
+            .filter(line => line.length > 1)
             .map(line => [
               new Date(line[0]).getTime(),
               parseInt(line[1], 10) + parseInt(line[2], 10)
             ])
+            // config now is 13 digit timestamp from config object,
+            // line[0] is 13 digit timestamp from previous map
+            // config.oldest is magic number for 8 hours from config
             .filter(line => config.now - line[0] > config.oldest);
           triggerWarning(false);
           canvasDad.update(canvasId);
@@ -157,6 +161,11 @@ const app = () => {
     return timerDad.create(() => {
       networkDad(`${config.root}${config.json}`)
         .then(val => {
+          // filters items that aren't white, red, green, or blue
+          // sorts based on time order
+          // splits them into object like: {red: [], blue:[]...}
+          // calls render function for canvas
+          // clears triggerWarning
           json = JSON
             .parse(val.response)
             .filter(item => colorOptions.indexOf(item.TriageStatus > -1))
@@ -183,7 +192,7 @@ const app = () => {
   // refresh
   window.onclick = () => {
     triggerWarning(false);
-    timerIds.forEach(i=>timerDad.delete(i));
+    timerDad.deleteAll();
     timerIds = [csvPoller(), jsonPoller()];
   };
 };

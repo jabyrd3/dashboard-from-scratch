@@ -10,13 +10,18 @@ window.TimerDad = function () {
       return id;
     },
     delete: (id) => {
-      clearTimeout(registry[id].timer);
+      clearTimeout(registry[id].cancel);
       delete registry[id];
+    },
+    deleteAll: () => {
+      Object
+        .keys(registry)
+        .forEach(t=>service.delete(t));
     },
     exec: (id) => {
       let timer = registry[id];
         timer.cb();
-        setTimeout(()=>{
+        timer.cancel = setTimeout(()=>{
           service.exec(id);
         }, registry[id].interval);
     }

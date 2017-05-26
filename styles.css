@@ -1,55 +1,59 @@
-#app{
-  position: fixed;
-  background-color: #1B1F24;
-  left: 1vh;
-  right: 1vh;
-  top: 1vh;
-  bottom: 1vh;
-  z-index: 2;
-}
-*{
-  background-color: #1B1F24;
-  margin: 0;
-  padding: 0;
+#app {
+    position: fixed;
+    background-color: #1B1F24;
+    left: 1vh;
+    right: 1vh;
+    top: 1vh;
+    bottom: 1vh;
+    z-index: 2;
 }
 
-
-@-webkit-keyframes rainbow {
-    0%{background-position:0% 82%}
-    50%{background-position:100% 19%}
-    100%{background-position:0% 82%}
+* {
+    background-color: #1B1F24;
+    margin: 0;
+    padding: 0;
 }
 
-#emergency{
-  -webkit-animation: rainbow 2s infinite alternate;
-  height: 100%;
-  z-index:1;
-  background: linear-gradient(124deg, #ff2400, #e81d1d, #e8b71d, #e3e81d, #1de840, #1ddde8, #2b1de8, #dd00f3, #dd00f3);
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-  top: 0;
-  background-size: 1800% 1800%;
+@keyframes spinner {
+    to {
+        transform: rotate(360deg);
+    }
 }
 
-#error{
-  z-index: 3;
-  display: none;
-  height: 100%;
-  width: 60%;
-  position:fixed;
-  top:0;
-  left:0;
-  background-color: orange;
-  color: black;
-  font-family: Helvetica, Arial, sans-serif;
-  vertical-align: middle;
-  text-align: center;
-  padding: 20%;
-  font-size: 20px;
-  font-weight: bold;
+#emergency {
+    animation: spinner 1s forwards linear infinite;
+    height: 200vh;
+    z-index: 1;
+    background: linear-gradient(left, rgba(255, 0, 0, 0.5) 0%, rgba(255, 158, 12, 0.55) 20%, rgba(209, 255, 25, 0.6) 40%, rgba(81, 255, 38, 0.65) 60%, rgba(91, 255, 50, 0.7) 80%, rgba(63, 255, 140, 0.75) 100%), linear-gradient(right, rgba(63, 255, 140, 0.75) 0%, rgba(76, 255, 255, 0.8) 20%, rgba(89, 155, 255, 0.85) 40%, rgba(132, 102, 255, 0.9) 60%, rgba(226, 114, 255, 0.95) 80%, rgba(249, 112, 194, 1) 100%) 0 100%;
+    background: -webkit-linear-gradient(left, rgba(255, 0, 0, 0.5) 0%, rgba(255, 158, 12, 0.55) 20%, rgba(209, 255, 25, 0.6) 40%, rgba(81, 255, 38, 0.65) 60%, rgba(91, 255, 50, 0.7) 80%, rgba(63, 255, 140, 0.75) 100%), -webkit-linear-gradient(right, rgba(63, 255, 140, 0.75) 0%, rgba(76, 255, 255, 0.8) 20%, rgba(89, 155, 255, 0.85) 40%, rgba(132, 102, 255, 0.9) 60%, rgba(226, 114, 255, 0.95) 80%, rgba(249, 112, 194, 1) 100%) 0 100%;
+    background-repeat: no-repeat;
+    position: fixed;
+    width: 200vw;
+    bottom: 50%;
+    right: 50%;
+    top: -50%;
+    left: -50%;
+}
 
+#error {
+    z-index: 3;
+    display: none;
+    height: 100%;
+    width: 60%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: orange;
+    color: black;
+    font-family: Helvetica, Arial, sans-serif;
+    vertical-align: middle;
+    text-align: center;
+    padding: 20%;
+    font-size: 20px;
+    font-weight: bold;
 }
-#error.show{
-  display: block;
+
+#error.show {
+    display: block;
 }
+
