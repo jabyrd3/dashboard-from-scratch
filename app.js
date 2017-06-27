@@ -146,7 +146,7 @@ const app = () => {
       networkDad(`${config.root}${config.csv}`)
         .then(val => {
           // reset config.now
-          config.now = new Date('2017-05-26T15:10:15Z').getTime();
+          config.now = Date.now();
           // split on lines, returns array like [date, sumValue]
           // also filters out items that are too old, not sure if thats right.
           csv = val.response
@@ -179,7 +179,7 @@ const app = () => {
           // calls render function for canvas
           // clears triggerWarning
           // reset config.now
-          config.now = new Date('2017-05-26T15:10:15Z').getTime();
+          config.now = Date.now();
           json = JSON
             .parse(val.response)
             .filter(item => colorOptions.indexOf(item.TriageStatus > -1))
