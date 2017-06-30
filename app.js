@@ -124,8 +124,9 @@ const app = () => {
       context.font =
         `${fontSize}px Helvetica Neue, Helvetica, Arial, sans-serif`;
       context.fillStyle = config.colorHex.white;
+      context.textAlign = 'right';
       context.fillText(barTotal.toString(),
-        canvas.clientWidth * .75,
+        canvas.clientWidth,
         canvas.clientHeight * .85);
     }).identifier;
 
