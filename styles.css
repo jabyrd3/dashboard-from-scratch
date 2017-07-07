@@ -14,37 +14,22 @@
     padding: 0;
 }
 
-@keyframes pulse {
-    from {
-        opacity: 0;
-    }
-    to {
-        opacity: 1;
-    }
-}
-
 @keyframes rainbowBorder {
     0% {
-        opacity: 0;
         transform: translate3d(-50vw, 0, 0);
     }
     100% {
-        opacity: 1;
         transform: translate3d(50vw, 0, 0);
     }
 }
-body.UNTRIAGED{
-    /*transition: all 900ms linear;*/
-    animation: pulse 1s alternate infinite;
-}
+
+
 #UNTRIAGED {
     /*animation: spinner 1s alternate linear infinite;*/
     height: 200vh;
     z-index: 1;
     background: initial;
-/*    -webkit-transition: all 900ms linear;
-    transition: all 900ms linear;
-*/    background: -webkit-linear-gradient(305deg, #ff0000, #ff9000, #feff00, #1dff00, #00ffe6, #0042ff, #e200ff, #ff00b6);
+    background: -webkit-linear-gradient(305deg, #ff0000, #ff9000, #feff00, #1dff00, #00ffe6, #0042ff, #e200ff, #ff00b6);
     background: linear-gradient(145deg, #ff0000, #ff9000, #feff00, #1dff00, #00ffe6, #0042ff, #e200ff, #ff00b6);
     -webkit-animation: rainbowBorder 1s alternate infinite;
     animation: rainbowBorder 1s alternate infinite;
