@@ -1,8 +1,9 @@
 'use strict';
 
-/* globals CanvasDad, networkDad, TimerDad, config */
+/* globals CanvasDad, networkDad, TimerDad, config, initDad */
 
 const app = () => {
+  initDad();
   const colorOptions = ['Red', 'Green', 'Blue', 'White'];
   const canvasDad = new CanvasDad();
   const timerDad = new TimerDad();
