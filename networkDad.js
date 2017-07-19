@@ -5,6 +5,9 @@ window.networkDad = function (target) {
     var xhr = new XMLHttpRequest();
     xhr.open('GET', `${target}`, true);
     xhr.send(null);
+    xhr.onerror = function () {
+      reject('Network Error');
+    };
     xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
         resolve({
