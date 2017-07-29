@@ -192,7 +192,7 @@ const app = () => {
           config.now = Date.now();
           json = JSON
             .parse(val.response)
-            .filter(item => colorOptions.indexOf(item.TriageStatus > -1))
+            .filter(item => colorOptions.indexOf(item.TriageStatus) > -1)
             .sort((a, b) => new Date(a['$116'])
               .getTime() - new Date(b['$116']).getTime())
             .reduce(
