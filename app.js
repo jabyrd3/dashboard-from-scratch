@@ -41,7 +41,9 @@ const app = () => {
         .keys(json)
         .reduce((acc, key) => acc + json[key].length, 0);
       let barHeight = (canvas.clientHeight / 3) / (barTotal*1.5);
-      barHeight = barHeight > canvas.clientHeight / 20 ? canvas.clientHeight / 20 : barHeight;
+      barHeight = barHeight > canvas.clientHeight / 20 ?
+        canvas.clientHeight / 20 :
+        barHeight;
       // xy xy int int: top-left, bottom-right, highstval, lowestVal
       let bezierBounds = [
         0,
@@ -77,8 +79,11 @@ const app = () => {
             .map(item => {
               context.fillStyle = config.colorHex[key];
               let diff = config.now - new Date(item['$116']).getTime();
-              let barWidth = diff > config.oldest ? msUnit * config.oldest : msUnit * diff;
-              barWidth < canvas.clientWidth / 50 && (() => barWidth = canvas.clientWidth / 50)();
+              let barWidth = diff > config.oldest ?
+                msUnit * config.oldest :
+                msUnit * diff;
+              barWidth < canvas.clientWidth / 50 &&
+                (() => barWidth = canvas.clientWidth / 50)();
               context.fillRect(
                 canvas.clientWidth - barWidth,
                 barHeight * idx * 1.5 + (canvas.clientHeight / 50),
@@ -88,8 +93,11 @@ const app = () => {
               if (item.TriageStatus === 'White' && !UNTRIAGED){
                 UNTRIAGED = document.createElement('div');
                 UNTRIAGED.id = 'UNTRIAGED';
+                UNTRIAGED.className =
+                  window.location.search.indexOf('rainbow') > -1 ?
+                  'spins' :
+                  'stationary';
                 document.body.appendChild(UNTRIAGED);
-                document.body.className='UNTRIAGED';
               }
           });
       });

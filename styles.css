@@ -25,14 +25,11 @@
 
 
 #UNTRIAGED {
-    /*animation: spinner 1s alternate linear infinite;*/
     height: 200vh;
     z-index: 1;
     background: initial;
     background: -webkit-linear-gradient(305deg, #ff0000, #ff9000, #feff00, #1dff00, #00ffe6, #0042ff, #e200ff, #ff00b6);
     background: linear-gradient(145deg, #ff0000, #ff9000, #feff00, #1dff00, #00ffe6, #0042ff, #e200ff, #ff00b6);
-    -webkit-animation: rainbowBorder 1s alternate infinite;
-    animation: rainbowBorder 1s alternate infinite;
     position: fixed;
     width: 200vw;
     bottom: -50vh;
@@ -40,7 +37,10 @@
     top: -50vh;
     left: -50vw;
 }
-
+#UNTRIAGED.spins{
+    -webkit-animation: rainbowBorder 1s alternate infinite;
+    animation: rainbowBorder .250s alternate linear infinite;
+}
 #error {
     z-index: 3;
     display: none;
